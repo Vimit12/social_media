@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    hostname: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: connectme
+      POSTGRES_DB: connectDB
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  minio:
+    image: bitnami/minio
+    hostname: minio
+    restart: always
+    environment:
+      MINIO_BROWSER: "on"
+      MINIO_ACCESS_KEY: connectme
+      MINIO_SECRET_KEY: connectme
+      MINIO_BUCKET_NAME: connectDB
+    volumes:
+      - ./minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
